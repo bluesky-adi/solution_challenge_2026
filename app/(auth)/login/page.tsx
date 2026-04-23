@@ -1,7 +1,6 @@
 'use client';
 
 import { useAuth } from '@/hooks/useAuth';
-import { Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
@@ -15,22 +14,18 @@ export default function LoginPage() {
   };
 
   if (loading) {
-    return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-slate-300">Loading...</div>;
+    return <div className="min-h-screen bg-background flex items-center justify-center text-muted-foreground">Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4">
-      <div className="mb-8 flex flex-col items-center">
-        <Shield size={64} className="text-blue-600 mb-4" />
-      </div>
-
-      <div className="w-full max-w-[420px] bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-8">
-        <h1 className="text-2xl font-bold text-white text-center mb-2">SportShield</h1>
-        <p className="text-slate-400 text-center mb-8">Protect your sports media</p>
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+      <div className="w-full max-w-[420px] bg-card border border-border rounded-2xl shadow-2xl p-8">
+        <h1 className="text-2xl font-bold text-card-foreground text-center mb-2">SportShield</h1>
+        <p className="text-muted-foreground text-center mb-8">Protect your sports media</p>
 
         <Button 
           variant="outline" 
-          className="w-full bg-transparent border-slate-700 text-white hover:bg-slate-800"
+          className="w-full"
           onClick={handleGoogleSignIn}
         >
           <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
@@ -43,9 +38,9 @@ export default function LoginPage() {
         </Button>
 
         <div className="flex items-center my-6">
-          <div className="flex-grow border-t border-slate-800"></div>
-          <span className="px-4 text-sm text-slate-500">or</span>
-          <div className="flex-grow border-t border-slate-800"></div>
+          <div className="flex-grow border-t border-border"></div>
+          <span className="px-4 text-sm text-muted-foreground">or</span>
+          <div className="flex-grow border-t border-border"></div>
         </div>
 
         <form onSubmit={handleGoogleSignIn} className="space-y-4">
@@ -53,7 +48,6 @@ export default function LoginPage() {
             <Input 
               type="email" 
               placeholder="Email address" 
-              className="bg-slate-950 border-slate-800 text-white placeholder:text-slate-500"
               defaultValue="demo@sportshield.com"
             />
           </div>
@@ -61,17 +55,16 @@ export default function LoginPage() {
             <Input 
               type="password" 
               placeholder="Password" 
-              className="bg-slate-950 border-slate-800 text-white placeholder:text-slate-500"
               defaultValue="password123"
             />
           </div>
-          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-2">
+          <Button type="submit" className="w-full mt-2">
             Sign In
           </Button>
         </form>
 
         <div className="mt-6 text-center">
-          <a href="#" className="text-sm text-blue-500 hover:text-blue-400" onClick={handleGoogleSignIn}>
+          <a href="#" className="text-sm text-primary hover:underline" onClick={handleGoogleSignIn}>
             Create account
           </a>
         </div>
