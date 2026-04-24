@@ -31,28 +31,41 @@ export default function UploadPage() {
       setStep(2);
       await new Promise(r => setTimeout(r, 2000));
       
-      // Mock successful result
-      const newAsset = {
-        id: `asset_${Date.now()}`,
+      // Prepare asset metadata
+      const assetData = {
         orgId: 'mock_org',
         name: file.name,
-        mediaType: file.type.startsWith('image/') ? 'image' as const : 'video' as const,
-        status: 'protected' as const,
+        mediaType: file.type.startsWith('image/') ? 'image' : 'video',
+        status: 'protected',
         fingerprintHash: Array.from({length: 16}, () => Math.floor(Math.random()*16).toString(16)).join(''),
-        fingerprintFrames: [],
-        storageUrl: '',
-        storagePath: '',
-        uploadedAt: new Date().toISOString(),
         fileSize: file.size,
       };
+
+      // Save to MongoDB via API route
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(assetData)
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to save to database');
+      }
+
+      const { asset } = await res.json();
       
-      addAsset(newAsset);
+      // Add to local state using the returned database asset
+      addAsset({
+        ...asset,
+        id: asset._id || `asset_${Date.now()}` // Fallback if API response varies
+      });
       
       // Step 3: Done
       setStep(3);
-      toast.success('Your content has been protected successfully!');
+      toast.success('Your content has been protected and stored successfully!');
       
     } catch (error) {
+      console.error(error);
       toast.error('Failed to upload and protect media');
       setStep(0);
       setProgress(0);

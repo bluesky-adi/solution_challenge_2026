@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Upload, Archive, Globe, Shield, LogOut, Menu } from 'lucide-react';
+import { LayoutDashboard, Upload, Archive, Globe, LogOut, Menu } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -18,10 +18,9 @@ export function Sidebar({ className }: { className?: string }) {
   const { user, signOut } = useAuth();
 
   return (
-    <div className={cn('flex flex-col h-full bg-slate-950 text-slate-300 w-60 border-r border-slate-800', className)}>
+    <div className={cn('flex flex-col h-full bg-sidebar text-sidebar-foreground w-60 border-r border-sidebar-border', className)}>
       <div className="p-6 flex items-center gap-3">
-        <Shield size={32} className="text-blue-600" />
-        <span className="text-xl font-bold text-white tracking-tight">SportShield</span>
+        <span className="text-xl font-bold text-sidebar-foreground tracking-tight">SportShield</span>
       </div>
 
       <nav className="flex-1 px-4 space-y-2 mt-4">
@@ -35,8 +34,8 @@ export function Sidebar({ className }: { className?: string }) {
               className={cn(
                 'flex items-center gap-3 px-3 py-2.5 rounded-md transition-colors',
                 isActive
-                  ? 'bg-blue-600 text-white font-medium border-l-4 border-blue-400'
-                  : 'hover:bg-slate-900 hover:text-white border-l-4 border-transparent'
+                  ? 'bg-sidebar-primary text-sidebar-primary-foreground font-medium'
+                  : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
               )}
             >
               <Icon size={20} />
@@ -46,21 +45,21 @@ export function Sidebar({ className }: { className?: string }) {
         })}
       </nav>
 
-      <div className="p-4 border-t border-slate-800 mt-auto">
+      <div className="p-4 border-t border-sidebar-border mt-auto">
         <div className="flex items-center gap-3 mb-4">
           <Avatar className="h-10 w-10">
-            <AvatarFallback className="bg-blue-900 text-blue-200">
+            <AvatarFallback className="bg-sidebar-primary text-sidebar-primary-foreground">
               {user?.name?.[0] || 'U'}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-white truncate">{user?.name || 'User'}</p>
-            <p className="text-xs text-slate-500 truncate">{user?.email}</p>
+            <p className="text-sm font-medium text-sidebar-foreground truncate">{user?.name || 'User'}</p>
+            <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
           </div>
         </div>
         <Button 
           variant="outline" 
-          className="w-full justify-start text-slate-300 border-slate-800 bg-transparent hover:bg-slate-900 hover:text-white"
+          className="w-full justify-start text-sidebar-foreground border-sidebar-border bg-transparent hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
           onClick={signOut}
         >
           <LogOut size={16} className="mr-2" />
